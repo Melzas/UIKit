@@ -8,7 +8,7 @@
 
 @class IDPPresentationController;
 
-@protocol IDPPresentationControllerDelegate <IDPDelegate>
+@protocol IDPPresentationControllerDelegate <IDPObject>
 
 @optional
 
