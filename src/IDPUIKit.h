@@ -10,3 +10,8 @@
 #import "UIViewController+IDPInitialization.h"
 #import "IDPView.h"
 #import "IDPViewControllerChildMacros.h"
+
+#import "IDPPresentationController.h"
+#import "IDPPresentingOptions.h"
+#import "IDPPresentationControllerDelegate.h"
+#import "IDPPresentationControllerDataSource.h"
