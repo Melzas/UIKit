@@ -9,3 +9,4 @@
 #import "UIViewController+IDPExtensions.h"
 #import "UIViewController+IDPInitialization.h"
 #import "IDPView.h"
+#import "IDPViewControllerChildMacros.h"
