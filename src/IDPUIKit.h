@@ -1,4 +1,5 @@
 #import "IDPLoadingView.h"
+#import "UIAlertView+IDPExtensions.h"
 #import "UIEvent+IDPExtensions.h"
 #import "UIImage+IDPExtensions.h"
 #import "UINib+IDPExtensions.h"
