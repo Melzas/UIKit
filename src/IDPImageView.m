@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
-#import "TXImageView.h"
+#import "IDPImageView.h"
 
 #import "IDPImageModel.h"
 
