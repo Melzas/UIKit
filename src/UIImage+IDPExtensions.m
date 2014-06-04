@@ -84,14 +84,13 @@ static NSString * const IDPJPEGFileExtension    = @"jpeg";
     CGContextFillRect(context, rect);
     
     // draw original image
-    CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
-    CGContextDrawImage(context, rect, self.CGImage);
-    
+	CGContextDrawImage(context, rect, self.CGImage);
+	
     // tint image (loosing alpha) - the luminosity of the original image is preserved
     CGContextSetBlendMode(context, kCGBlendModeColor);
     [color setFill];
     CGContextFillRect(context, rect);
-    
+	
     // mask by alpha values of original image
     CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
     CGContextDrawImage(context, rect, self.CGImage);
