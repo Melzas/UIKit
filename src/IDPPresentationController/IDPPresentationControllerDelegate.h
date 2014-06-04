@@ -12,13 +12,13 @@
 
 @optional
 
--		(void)presentationController:(IDPPresentationController *)presentationController
-	willReplaceContentViewController:(UIViewController *)contentViewController
-				  withViewController:(UIViewController *)newViewController;
+-		  (void)presentationController:(IDPPresentationController *)presentationController
+	willProceedToContentViewController:(UIViewController *)contentViewController
+					fromViewController:(UIViewController *)oldViewController;
 
--	   (void)presentationController:(IDPPresentationController *)presentationController
-	didReplaceContentViewController:(UIViewController *)contentViewController
-				 withViewController:(UIViewController *)newViewController;
+-		 (void)presentationController:(IDPPresentationController *)presentationController
+	didProceedToContentViewController:(UIViewController *)contentViewController
+				   fromViewController:(UIViewController *)newViewController;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
 	 willPresentViewController:(UIViewController *)viewController;

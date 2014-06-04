@@ -14,11 +14,11 @@
 #import "IDPPresentationView.h"
 
 #define kIDPWillReplaceSelector @selector(presentationController: \
-willReplaceContentViewController: \
-withViewController:)
+							  willProceedToContentViewController: \
+											  fromViewController:)
 #define kIDPDidReplaceSelector	@selector(presentationController: \
-didReplaceContentViewController: \
-withViewController:)
+							   didProceedToContentViewController: \
+											  fromViewController:)
 
 #define kIDPWillPresentSelector @selector(presentationController:willPresentViewController:)
 #define kIDPDidPresentSelector	@selector(presentationController:didPresentViewController:)
@@ -78,14 +78,14 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
 	[delegate performSelector:kIDPWillReplaceSelector
-				  withObjects:self, oldContentViewController, contentViewController, nil];
+				  withObjects:self, contentViewController, contentViewController, nil];
 	
 	IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
 	IDPNonatomicRetainPropertySynthesize(_contentViewController, contentViewController);
 	IDPViewControllerAddChildViewControllerSynthesize(contentViewController);
 	
 	[delegate performSelector:kIDPDidReplaceSelector
-				  withObjects:self, oldContentViewController, contentViewController, nil];
+				  withObjects:self, contentViewController, oldContentViewController, nil];
 }
 
 - (void)setDataSource:(id<IDPPresentationControllerDataSource>)dataSource {
