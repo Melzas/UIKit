@@ -73,8 +73,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 		return;
 	}
 	
-	CGRect frame = contentViewController.view.frame;
-	self.view.frame = frame;
+	contentViewController.view.frame = self.view.frame;
 	
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
 	[delegate performSelector:kIDPWillReplaceSelector
@@ -181,6 +180,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 
 - (void)loadView {
 	UIView *view = [IDPPresentationView object];
+	view.frame = [[UIScreen mainScreen] bounds];
 	
 	self.view = view;
 }
