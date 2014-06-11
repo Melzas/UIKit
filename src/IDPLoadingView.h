@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface IDPLoadingView : UIView
+@property (nonatomic, readonly) UIActivityIndicatorView   *activityIndicator;
+@property (nonatomic, readonly) UILabel                   *label;
 
 + (id)loadingViewInView:(UIView *)view;
 + (id)loadingViewInView:(UIView *)view withMessage:(NSString *)message;

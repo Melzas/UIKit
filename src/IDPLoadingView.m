@@ -13,15 +13,18 @@
 
 #import "IDPPropertyMacros.h"
 
-static const CGFloat IDPLoadingViewFadeDuration   = 0.3f;
+static const CGFloat IDPLoadingViewFadeDuration	= 0.3f;
+static const CGFloat IDPLoadingViewLabelOffset	= 45.0f;
+static const CGFloat IDPLoadingViewLabelHeight	= 25.0f;
 
 @interface IDPLoadingView ()
 @property (nonatomic, retain) UIActivityIndicatorView   *activityIndicator;
 @property (nonatomic, retain) UILabel                   *label;
 
 - (id)initWithFrame:(CGRect)frame andLabel:(NSString *)message;
-- (void)configureLable:(NSString *)message;
-- (void)configureactivityIndicator;
+- (void)configureLabel:(NSString *)message;
+- (void)configureActivityIndicator;
+- (void)showInView:(UIView *)view;
 
 @end
 
@@ -34,31 +37,22 @@ static const CGFloat IDPLoadingViewFadeDuration   = 0.3f;
 #pragma mark Class Methods
 
 + (id)loadingViewInView:(UIView *)view {
-    IDPLoadingView *loadingView = [[[IDPLoadingView alloc] initWithFrame:CGZeroOriginRectWithRect(view.frame)] autorelease];
-    loadingView.alpha = 0.0f;
-    [view addSubview:loadingView];
-    [UIView animateWithDuration:IDPLoadingViewFadeDuration
-                          delay:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         loadingView.alpha = 1.0f;
-                     }
-                     completion:nil];
+    IDPLoadingView *loadingView = [[[IDPLoadingView alloc]
+									initWithFrame:CGZeroOriginRectWithRect(view.frame)]
+								    autorelease];
+	
+	[loadingView showInView:view];
     
     return loadingView;
 }
 
 + (id)loadingViewInView:(UIView *)view withMessage:(NSString *)message {
-    IDPLoadingView *loadingView = [[[IDPLoadingView alloc] initWithFrame:CGZeroOriginRectWithRect(view.frame) andLabel:message] autorelease];
-    loadingView.alpha = 0.0f;
-    [view addSubview:loadingView];
-    [UIView animateWithDuration:IDPLoadingViewFadeDuration
-                          delay:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         loadingView.alpha = 1.0f;
-                     }
-                     completion:nil];
+    IDPLoadingView *loadingView = [[[IDPLoadingView alloc]
+									initWithFrame:CGZeroOriginRectWithRect(view.frame)
+										 andLabel:message]
+								    autorelease];
+	
+	[loadingView showInView:view];
     
     return loadingView;
 }
@@ -85,7 +79,7 @@ static const CGFloat IDPLoadingViewFadeDuration   = 0.3f;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self configureactivityIndicator];
+        [self configureActivityIndicator];
         [self baseInit];
     }
     
@@ -95,8 +89,8 @@ static const CGFloat IDPLoadingViewFadeDuration   = 0.3f;
 - (id)initWithFrame:(CGRect)frame andLabel:(NSString *)message {
     self = [super initWithFrame:frame];
     if (self) {
-        [self configureLable:message];
-        [self configureactivityIndicator];
+        [self configureLabel:message];
+        [self configureActivityIndicator];
         [self baseInit];
     }
     
@@ -139,24 +133,45 @@ static const CGFloat IDPLoadingViewFadeDuration   = 0.3f;
 #pragma mark -
 #pragma mark Private
 
-- (void)configureLable:(NSString *)message {
-    self.label = [[[UILabel alloc] initWithFrame:CGRectMake(self.frame.origin.x, CGMidY(self.frame) - 45, self.frame.size.width, 25)] autorelease];
+- (void)configureLabel:(NSString *)message {
+	self.label.backgroundColor = [UIColor clearColor];
+	
+	CGRect frame = self.frame;
+	CGRect textFrame = CGRectMake(frame.origin.x,
+								  CGMidY(frame) - IDPLoadingViewLabelOffset,
+								  frame.size.width,
+								  IDPLoadingViewLabelHeight);
+	
+    self.label = [[[UILabel alloc] initWithFrame:textFrame] autorelease];
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.textColor = [UIColor whiteColor];
-    self.label.backgroundColor = [UIColor clearColor];
-    self.label.text = message;
-
+	self.label.text = message;
 }
 
-- (void)configureactivityIndicator {
+- (void)configureActivityIndicator {
     
     CGRect frame = CGZeroOriginRectWithRect(self.frame);
     self.activityIndicator.center = CGPointMake(CGMidX(frame),
                                                 CGMidY(frame));
 
-    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator = [[[UIActivityIndicatorView alloc]
+							   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]
+							   autorelease];
+	
     self.activityIndicator.frame = CGZeroOriginRectWithRect(self.frame);
     
+}
+
+- (void)showInView:(UIView *)view {
+	self.alpha = 0.0f;
+    [view addSubview:self];
+    [UIView animateWithDuration:IDPLoadingViewFadeDuration
+                          delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.alpha = 1.0f;
+                     }
+                     completion:nil];
 }
 
 @end
