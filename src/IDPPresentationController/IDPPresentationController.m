@@ -62,6 +62,16 @@
 	[super dealloc];
 }
 
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle {
+	self = [super initWithNibName:nibName bundle:nibBundle];
+	
+	if (self) {
+		self.userInteractionDuringTransitionEnabled = NO;
+	}
+	
+	return self;
+}
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -72,6 +82,8 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	if (contentViewController == oldContentViewController) {
 		return;
 	}
+	
+	self.view.userInteractionEnabled = YES;
 	
 	contentViewController.view.frame = self.view.frame;
 	
@@ -88,6 +100,8 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 }
 
 - (void)setDataSource:(id<IDPPresentationControllerDataSource>)dataSource {
+	self.view.userInteractionEnabled = YES;
+	
 	IDPNonatomicAssignPropertySynthesize(_dataSource, dataSource);
 	
 	NSMutableArray *mutableModalViewControllers = self.mutableModalViewControllers;
@@ -119,9 +133,14 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
 	[delegate performSelector:kIDPWillPresentSelector withObjects:self, viewController, nil];
 	
+	UIView *view = self.view;
+	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
+	
 	[self.presentationView presentView:viewController.view
 					 presentingOptions:options
 							completion:^{
+								view.userInteractionEnabled = YES;
+								
 								[delegate performSelector:kIDPDidPresentSelector
 											  withObjects:self, viewController, nil];
 							}
@@ -139,9 +158,14 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
 	[delegate performSelector:kIDPWillDismissSelector withObjects:self, viewController, nil];
 	
+	UIView *view = self.view;
+	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
+	
 	[self.presentationView dismissView:viewController.view
 					 presentingOptions:options
 							completion:^{
+								view.userInteractionEnabled = YES;
+								
 								[delegate performSelector:kIDPDidDismissSelector
 											  withObjects:self, viewController, nil];
 							}

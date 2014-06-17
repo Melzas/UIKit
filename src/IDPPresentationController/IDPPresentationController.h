@@ -23,6 +23,9 @@
 @property (nonatomic, retain)	UIViewController	*contentViewController;
 @property (nonatomic, readonly)	NSArray				*modalViewControllers;
 
+@property (nonatomic, assign, getter = isUserInteractionDuringTransitionEnabled)
+	BOOL userInteractionDuringTransitionEnabled;
+
 @property (nonatomic, assign)	id<IDPPresentationControllerDelegate>	delegate;
 @property (nonatomic, assign)	id<IDPPresentationControllerDataSource>	dataSource;
 
