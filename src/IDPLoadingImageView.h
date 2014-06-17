@@ -1,5 +1,5 @@
 //
-//  IDPImageView.h
+//  IDPLoadingImageView.h
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/21/14.
@@ -8,7 +8,7 @@
 
 @class IDPImageModel;
 
-@interface IDPImageView : UIView <IDPModelObserver>
+@interface IDPLoadingImageView : UIView <IDPModelObserver>
 @property (nonatomic, retain)	IBOutlet UIActivityIndicatorView	*spinner;
 @property (nonatomic, retain)	IBOutlet UIImageView				*imageView;
 

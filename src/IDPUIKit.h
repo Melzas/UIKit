@@ -11,7 +11,7 @@
 #import "UIViewController+IDPInitialization.h"
 #import "IDPView.h"
 #import "IDPViewControllerChildMacros.h"
-#import "IDPImageView.h"
+#import "IDPLoadingImageView.h"
 
 #import "IDPPresentationController.h"
 #import "IDPPresentingOptions.h"

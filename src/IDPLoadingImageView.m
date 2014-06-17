@@ -1,23 +1,23 @@
 //
-//  IDPImageView.m
+//  IDPLoadingImageView.m
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/21/14.
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
-#import "IDPImageView.h"
+#import "IDPLoadingImageView.h"
 
 #import "IDPImageModel.h"
 
-@interface IDPImageView ()
+@interface IDPLoadingImageView ()
 
 - (void)loadModel;
 - (void)fillFromModel:(IDPImageModel *)model;
 
 @end
 
-@implementation IDPImageView
+@implementation IDPLoadingImageView
 
 #pragma mark -
 #pragma mark Initializations and Deallocations
