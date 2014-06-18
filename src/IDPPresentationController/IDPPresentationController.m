@@ -93,7 +93,9 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
 	IDPNonatomicRetainPropertySynthesize(_contentViewController, contentViewController);
-	IDPViewControllerAddChildViewControllerSynthesize(contentViewController);
+	[self addChildViewController:contentViewController];
+	[self.view insertSubview:contentViewController.view atIndex:0];
+	[contentViewController didMoveToParentViewController:self];
 	
 	[delegate performSelector:kIDPDidReplaceSelector
 				  withObjects:self, contentViewController, oldContentViewController, nil];
@@ -123,6 +125,17 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 #pragma mark Public
 
 - (void)presentViewController:(UIViewController *)viewController animated:(BOOL)animated {
+	[self presentViewController:viewController animated:animated completion:nil];
+}
+
+- (void)dismissViewController:(UIViewController *)viewController animated:(BOOL)animated {
+	[self dismissViewController:viewController animated:animated completion:nil];
+}
+
+- (void)presentViewController:(UIViewController *)viewController
+					 animated:(BOOL)animated
+				   completion:(void(^)())completionBLock
+{
 	id<IDPPresentationControllerDataSource> dataSource = self.dataSource;
 	
 	IDPPresentingOptions options = [dataSource presentingOptionsForViewController:viewController];
@@ -143,11 +156,18 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 								
 								[delegate performSelector:kIDPDidPresentSelector
 											  withObjects:self, viewController, nil];
+								
+								if (completionBLock) {
+									completionBLock();
+								}
 							}
 	 ];
 }
 
-- (void)dismissViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)dismissViewController:(UIViewController *)viewController
+					 animated:(BOOL)animated
+				   completion:(void(^)())completionBLock
+{
 	id<IDPPresentationControllerDataSource> dataSource = self.dataSource;
 	
 	IDPPresentingOptions options = [dataSource presentingOptionsForViewController:viewController];
@@ -168,6 +188,10 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 								
 								[delegate performSelector:kIDPDidDismissSelector
 											  withObjects:self, viewController, nil];
+								
+								if (completionBLock) {
+									completionBLock();
+								}
 							}
 	 ];
 }

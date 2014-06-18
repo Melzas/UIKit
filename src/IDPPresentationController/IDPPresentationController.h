@@ -32,4 +32,11 @@
 - (void)presentViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)dismissViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
+- (void)presentViewController:(UIViewController *)viewController
+					 animated:(BOOL)animated
+				   completion:(void(^)())completionBLock;
+- (void)dismissViewController:(UIViewController *)viewController
+					 animated:(BOOL)animated
+				   completion:(void(^)())completionBLock;
+
 @end
