@@ -63,7 +63,8 @@
 }
 
 - (void)modelDidFailToLoad:(id)theModel {
-	[UIAlertView showInternetConnectionError];
+	[self.spinner stopAnimating];
+	[self.imageView removeFromSuperview];
 }
 
 @end
