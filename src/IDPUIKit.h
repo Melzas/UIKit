@@ -6,6 +6,7 @@
 #import "UINib+IDPExtensions.h"
 #import "UIStoryboard+IDPExtensions.h"
 #import "UITableView+IDPCellLoading.h"
+#import "UICollectionView+IDPCellLoading.h"
 #import "UIView+IDPExtensions.h"
 #import "UIViewController+IDPExtensions.h"
 #import "UIViewController+IDPInitialization.h"
