@@ -93,9 +93,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
 	IDPNonatomicRetainPropertySynthesize(_contentViewController, contentViewController);
-	[self addChildViewController:contentViewController];
-	[self.view insertSubview:contentViewController.view atIndex:0];
-	[contentViewController didMoveToParentViewController:self];
+	if (nil != contentViewController) {
+		[self addChildViewController:contentViewController];
+		[self.view insertSubview:contentViewController.view atIndex:0];
+		[contentViewController didMoveToParentViewController:self];
+	}
 	
 	[delegate performSelector:kIDPDidReplaceSelector
 				  withObjects:self, contentViewController, oldContentViewController, nil];

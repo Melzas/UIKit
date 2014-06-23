@@ -7,14 +7,18 @@
 //
 
 #define IDPViewControllerAddChildViewControllerSynthesize(childController) \
-	[self addChildViewController:childController]; \
-	[self.view addSubview:childController.view]; \
-	[childController didMoveToParentViewController:self];
+	if (nil != childController) { \
+		[self addChildViewController:childController]; \
+		[self.view addSubview:childController.view]; \
+		[childController didMoveToParentViewController:self]; \
+	}
 
 #define IDPViewControllerAddChildViewControllerToViewSynthesize(childController, toView) \
-	[self addChildViewController:childController]; \
-	[toView addSubview:childController.view]; \
-	[childController didMoveToParentViewController:self];
+	if (nil != childController) { \
+		[self addChildViewController:childController]; \
+		[toView addSubview:childController.view]; \
+		[childController didMoveToParentViewController:self]; \
+	}
 
 #define IDPViewControllerRemoveChildViewControllerSynthesize(childController) \
 	[childController willMoveToParentViewController:nil]; \
