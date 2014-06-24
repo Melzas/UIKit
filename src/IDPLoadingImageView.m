@@ -36,6 +36,7 @@
 - (void)setModel:(IDPImageModel *)imageModel {
 	IDPNonatomicRetainPropertySynthesizeWithObserver(_model, imageModel);
 	
+	self.imageView.image = nil;
 	[self loadModel];
 }
 
