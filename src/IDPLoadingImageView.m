@@ -36,8 +36,12 @@
 - (void)setModel:(IDPImageModel *)imageModel {
 	IDPNonatomicRetainPropertySynthesizeWithObserver(_model, imageModel);
 	
-	self.imageView.image = nil;
-	[self loadModel];
+	if (IDPModelFinished == imageModel.state) {
+		[self fillFromModel:imageModel];
+	} else {
+		self.imageView.image = nil;
+		[self loadModel];
+	}
 }
 
 #pragma mark -
