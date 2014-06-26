@@ -20,7 +20,7 @@
 @end
 
 @interface IDPPresentationController : UIViewController
-@property (nonatomic, retain)	UIViewController	*contentViewController;
+@property (nonatomic, retain)	id					contentViewController;
 @property (nonatomic, readonly)	NSArray				*modalViewControllers;
 
 @property (nonatomic, assign, getter = isUserInteractionDuringTransitionEnabled)
@@ -29,13 +29,13 @@
 @property (nonatomic, assign)	id<IDPPresentationControllerDelegate>	delegate;
 @property (nonatomic, assign)	id<IDPPresentationControllerDataSource>	dataSource;
 
-- (void)presentViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)dismissViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)presentViewController:(id)viewController animated:(BOOL)animated;
+- (void)dismissViewController:(id)viewController animated:(BOOL)animated;
 
-- (void)presentViewController:(UIViewController *)viewController
+- (void)presentViewController:(id)viewController
 					 animated:(BOOL)animated
 				   completion:(void(^)())completionBLock;
-- (void)dismissViewController:(UIViewController *)viewController
+- (void)dismissViewController:(id)viewController
 					 animated:(BOOL)animated
 				   completion:(void(^)())completionBLock;
 
