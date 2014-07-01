@@ -34,10 +34,15 @@
 #pragma mark Accessors
 
 - (void)setModel:(IDPImageModel *)imageModel {
+	if (IDPModelFailed == _model.state) {
+		[self addSubview:self.imageView];
+	}
+	
 	IDPNonatomicRetainPropertySynthesizeWithObserver(_model, imageModel);
 	
 	if (IDPModelFinished == imageModel.state) {
 		[self fillFromModel:imageModel];
+		[self.spinner stopAnimating];
 	} else {
 		self.imageView.image = nil;
 		[self loadModel];
