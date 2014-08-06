@@ -29,4 +29,6 @@
                           nibName:(NSString *)nibName
                          inBundle:(NSBundle *)bundle;
 
+- (BOOL)isOnScreen;
+
 @end

@@ -60,4 +60,23 @@
     [self substitutePlaceholderView:placeholderView withView:view];
 }
 
+- (BOOL)isOnScreen {
+	if (self.hidden) {
+		return NO;
+	}
+	
+	UIWindow *window = self.window;
+	if (nil == window) {
+		return NO;
+	}
+	
+	CGRect windowFrame = window.frame;
+	CGRect frame = [self convertRect:self.frame toView:window];
+	if (!CGRectIntersectsRect(frame, windowFrame)) {
+		return NO;
+	}
+	
+	return YES;
+}
+
 @end

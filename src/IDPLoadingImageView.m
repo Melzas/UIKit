@@ -8,6 +8,8 @@
 
 #import "IDPLoadingImageView.h"
 
+#import "UIView+IDPExtensions.h"
+
 #import "IDPImageModel.h"
 
 @interface IDPLoadingImageView ()
@@ -75,6 +77,12 @@
 - (void)modelDidFailToLoad:(id)theModel {
 	[self.spinner stopAnimating];
 	[self.imageView removeFromSuperview];
+}
+
+- (void)modelDidUnload:(id)model {
+	if (![self isOnScreen]) {
+		[self fillFromModel:model];
+	}
 }
 
 @end
