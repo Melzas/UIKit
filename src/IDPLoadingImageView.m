@@ -14,7 +14,6 @@
 
 @interface IDPLoadingImageView ()
 
-- (void)loadModel;
 - (void)fillFromModel:(IDPImageModel *)model;
 
 @end
@@ -47,7 +46,6 @@
 		[self.spinner stopAnimating];
 	} else {
 		self.imageView.image = nil;
-		[self loadModel];
 	}
 }
 

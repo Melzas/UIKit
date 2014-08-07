@@ -14,4 +14,6 @@
 
 @property (nonatomic, retain)	IDPImageModel	*model;
 
+- (void)loadModel;
+
 @end
