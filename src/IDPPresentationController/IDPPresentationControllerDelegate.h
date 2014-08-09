@@ -21,15 +21,19 @@
 				   fromViewController:(UIViewController *)newViewController;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	 willPresentViewController:(UIViewController *)viewController;
+	 willPresentViewController:(UIViewController *)viewController
+					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	  didPresentViewController:(UIViewController *)viewController;
+	  didPresentViewController:(UIViewController *)viewController
+					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	 willDismissViewController:(UIViewController *)viewController;
+	 willDismissViewController:(UIViewController *)viewController
+					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	  didDismissViewController:(UIViewController *)viewController;
+	  didDismissViewController:(UIViewController *)viewController
+					  animated:(BOOL)animated;
 
 @end

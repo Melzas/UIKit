@@ -20,10 +20,10 @@
 							   didProceedToContentViewController: \
 											  fromViewController:)
 
-#define kIDPWillPresentSelector @selector(presentationController:willPresentViewController:)
-#define kIDPDidPresentSelector	@selector(presentationController:didPresentViewController:)
-#define kIDPWillDismissSelector @selector(presentationController:willDismissViewController:)
-#define kIDPDidDismissSelector	@selector(presentationController:didDismissViewController:)
+#define kIDPWillPresentSelector @selector(presentationController:willPresentViewController:animated:)
+#define kIDPDidPresentSelector	@selector(presentationController:didPresentViewController:animated:)
+#define kIDPWillDismissSelector @selector(presentationController:willDismissViewController:animated:)
+#define kIDPDidDismissSelector	@selector(presentationController:didDismissViewController:animated:)
 
 @implementation UIViewController (IDPPresentationController)
 
@@ -88,8 +88,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	contentViewController.view.frame = self.view.frame;
 	
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
-	[delegate performSelector:kIDPWillReplaceSelector
-				  withObjects:self, contentViewController, contentViewController, nil];
+	if ([delegate respondsToSelector:kIDPWillReplaceSelector]) {
+		[delegate presentationController:self
+	  willProceedToContentViewController:contentViewController
+					  fromViewController:oldContentViewController];
+	}
 	
 	IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
 	IDPNonatomicRetainPropertySynthesize(_contentViewController, contentViewController);
@@ -99,8 +102,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 		[contentViewController didMoveToParentViewController:self];
 	}
 	
-	[delegate performSelector:kIDPDidReplaceSelector
-				  withObjects:self, contentViewController, oldContentViewController, nil];
+	if ([delegate respondsToSelector:kIDPWillReplaceSelector]) {
+		[delegate presentationController:self
+	   didProceedToContentViewController:contentViewController
+					  fromViewController:oldContentViewController];
+	}
 }
 
 - (void)setDataSource:(id<IDPPresentationControllerDataSource>)dataSource {
@@ -146,7 +152,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	}
 	
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
-	[delegate performSelector:kIDPWillPresentSelector withObjects:self, viewController, nil];
+	if ([delegate respondsToSelector:kIDPWillPresentSelector]) {
+		[delegate presentationController:self
+			   willPresentViewController:viewController
+								animated:animated];
+	}
 	
 	UIView *view = self.view;
 	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
@@ -156,8 +166,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 							completion:^{
 								view.userInteractionEnabled = YES;
 								
-								[delegate performSelector:kIDPDidPresentSelector
-											  withObjects:self, viewController, nil];
+								if ([delegate respondsToSelector:kIDPDidPresentSelector]) {
+									[delegate presentationController:self
+											didPresentViewController:viewController
+															animated:animated];
+								}
 								
 								if (completionBLock) {
 									completionBLock();
@@ -178,7 +191,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	}
 	
 	id<IDPPresentationControllerDelegate> delegate = self.delegate;
-	[delegate performSelector:kIDPWillDismissSelector withObjects:self, viewController, nil];
+	if ([delegate respondsToSelector:kIDPWillDismissSelector]) {
+		[delegate presentationController:self
+			   willDismissViewController:viewController
+								animated:animated];
+	}
 	
 	UIView *view = self.view;
 	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
@@ -188,8 +205,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 							completion:^{
 								view.userInteractionEnabled = YES;
 								
-								[delegate performSelector:kIDPDidDismissSelector
-											  withObjects:self, viewController, nil];
+								if ([delegate respondsToSelector:kIDPDidPresentSelector]) {
+									[delegate presentationController:self
+											didDismissViewController:viewController
+															animated:animated];
+								}
 								
 								if (completionBLock) {
 									completionBLock();
