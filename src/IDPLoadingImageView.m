@@ -35,7 +35,12 @@
 #pragma mark Accessors
 
 - (void)setModel:(IDPImageModel *)imageModel {
-	if (IDPModelFailed == _model.state) {
+	[self setModel:imageModel loadLater:NO];
+}
+
+- (void)setModel:(IDPImageModel *)imageModel loadLater:(BOOL)loadLater {
+	IDPImageModel *previousModel = _model;
+	if (IDPModelFailed == previousModel.state) {
 		[self addSubview:self.imageView];
 	}
 	
@@ -45,7 +50,13 @@
 		[self fillFromModel:imageModel];
 		[self.spinner stopAnimating];
 	} else {
-		self.imageView.image = nil;
+		if (kIDPImageSourceFileURLUpdate != imageModel.imageSource) {
+			self.imageView.image = nil;
+		}
+		
+		if (!loadLater) {
+			[self loadModel];
+		}
 	}
 }
 
