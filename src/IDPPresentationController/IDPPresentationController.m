@@ -205,7 +205,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 							completion:^{
 								view.userInteractionEnabled = YES;
 								
-								if ([delegate respondsToSelector:kIDPDidPresentSelector]) {
+								if ([delegate respondsToSelector:kIDPDidDismissSelector]) {
 									[delegate presentationController:self
 											didDismissViewController:viewController
 															animated:animated];
