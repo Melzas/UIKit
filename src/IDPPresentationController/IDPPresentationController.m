@@ -28,13 +28,16 @@
 @implementation UIViewController (IDPPresentationController)
 
 - (IDPPresentationController *)presentationController {
-	UIViewController *parentController = self.parentViewController;
+	id controller = self;
 	
-	if (![parentController isKindOfClass:[IDPPresentationController class]]) {
-		return nil;
-	}
+	do {
+		controller = [controller parentViewController];
+		if ([controller isKindOfClass:[IDPPresentationController class]]) {
+			return controller;
+		}
+	} while (nil != controller);
 	
-	return (IDPPresentationController *)parentController;
+	return nil;
 }
 
 @end
