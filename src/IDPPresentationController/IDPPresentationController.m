@@ -123,7 +123,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 		[self removeModalViewController:mutableModalViewControllers[0]];
 	}
 	
-	NSArray *modalViewControllers = [dataSource modalViewControllers];
+	NSArray *modalViewControllers = [dataSource modalViewControllersForPresentationController:self];
 	NSUInteger modalViewControllerCount = [modalViewControllers count];
 	self.mutableModalViewControllers = [NSMutableArray arrayWithCapacity:modalViewControllerCount];
 	

@@ -10,7 +10,7 @@
 
 @protocol IDPPresentationControllerDataSource <NSObject>
 
-- (NSArray *)modalViewControllers;
+- (NSArray *)modalViewControllersForPresentationController:(IDPPresentationController *)controller;
 
 - (IDPPresentingOptions)presentingOptionsForViewController:(UIViewController *)viewController;
 
