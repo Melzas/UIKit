@@ -8,6 +8,8 @@
 
 #import "IDPPresentingOptions.h"
 
+@class IDPPresentationController;
+
 @protocol IDPPresentationControllerDataSource <NSObject>
 
 - (NSArray *)modalViewControllersForPresentationController:(IDPPresentationController *)controller;

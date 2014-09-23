@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
+#import "IDPObject.h"
+
 @class IDPPresentationController;
 
 @protocol IDPPresentationControllerDelegate <IDPObject>

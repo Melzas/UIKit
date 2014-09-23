@@ -10,6 +10,7 @@
 
 #import "UIView+IDPExtensions.h"
 
+#import "IDPPropertyMacros.h"
 #import "IDPImageModel.h"
 
 @interface IDPLoadingImageView ()

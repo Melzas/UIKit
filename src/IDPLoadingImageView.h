@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
+#import "IDPModelObserver.h"
+
 @class IDPImageModel;
 
 @interface IDPLoadingImageView : UIView <IDPModelObserver>

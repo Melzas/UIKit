@@ -8,6 +8,8 @@
 
 #import "IDPPresentationView.h"
 
+#import "CGGeometry+IDPExtensions.h"
+
 #import "IDPPresentationControllerDataSource.h"
 #import "IDPPresentationControllerDelegate.h"
 

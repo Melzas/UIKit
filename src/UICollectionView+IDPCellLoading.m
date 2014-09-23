@@ -8,6 +8,8 @@
 
 #import "UICollectionView+IDPCellLoading.h"
 
+#import "UINib+IDPExtensions.h"
+
 @implementation UICollectionView (IDPCellLoading)
 
 - (void)registerCell:(Class)theClass {

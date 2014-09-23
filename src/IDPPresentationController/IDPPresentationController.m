@@ -8,6 +8,9 @@
 
 #import "IDPPresentationController.h"
 
+#import "UIViewController+IDPExtensions.h"
+#import "IDPPropertyMacros.h"
+
 #import "IDPPresentationControllerDelegate.h"
 #import "IDPPresentationControllerDataSource.h"
 
