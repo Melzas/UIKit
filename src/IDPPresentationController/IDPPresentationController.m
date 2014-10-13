@@ -8,6 +8,7 @@
 
 #import "IDPPresentationController.h"
 
+#import "NSObject+IDPExtensions.h"
 #import "UIViewController+IDPExtensions.h"
 #import "IDPPropertyMacros.h"
 
@@ -100,12 +101,18 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 					  fromViewController:oldContentViewController];
 	}
 	
-	IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
+	if (nil == self.storyboard) {
+		IDPViewControllerRemoveChildViewControllerSynthesize(_contentViewController);
+	}
+	
 	IDPNonatomicRetainPropertySynthesize(_contentViewController, contentViewController);
-	if (nil != contentViewController) {
-		[self addChildViewController:contentViewController];
-		[self.view insertSubview:contentViewController.view atIndex:0];
-		[contentViewController didMoveToParentViewController:self];
+	
+	if (nil == self.storyboard) {
+		if (nil != contentViewController) {
+			[self addChildViewController:contentViewController];
+			[self.view insertSubview:contentViewController.view atIndex:0];
+			[contentViewController didMoveToParentViewController:self];
+		}
 	}
 	
 	if ([delegate respondsToSelector:kIDPWillReplaceSelector]) {
@@ -132,6 +139,15 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	for (UIViewController *viewController in modalViewControllers) {
 		[self addModalViewController:viewController];
+	}
+}
+
+#pragma mark -
+#pragma mark Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	if ([segue.identifier isEqualToString:NSStringFromSelector(@selector(contentViewController))]) {
+		self.contentViewController = segue.destinationViewController;
 	}
 }
 
@@ -255,10 +271,14 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 }
 
 - (void)loadView {
-	UIView *view = [IDPPresentationView object];
-	view.frame = [[UIScreen mainScreen] bounds];
-	
-	self.view = view;
+	if (nil == self.storyboard) {
+		UIView *view = [IDPPresentationView object];
+		view.frame = [[UIScreen mainScreen] bounds];
+		
+		self.view = view;
+	} else {
+		[super loadView];
+	}
 }
 
 @end
