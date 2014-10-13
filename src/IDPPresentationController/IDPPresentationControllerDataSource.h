@@ -12,8 +12,10 @@
 
 @protocol IDPPresentationControllerDataSource <NSObject>
 
+// should return an array with modal view controllers for a given |controller|
 - (NSArray *)modalViewControllersForPresentationController:(IDPPresentationController *)controller;
 
+// should return presenting options for a given |viewController|
 - (IDPPresentingOptions)presentingOptionsForViewController:(UIViewController *)viewController;
 
 @end

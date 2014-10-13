@@ -11,6 +11,9 @@
 @protocol IDPPresentationControllerDataSource;
 @protocol IDPPresentationControllerDelegate;
 
+// This class is internal
+// If your IDPPresentationController is in nib/storyboard, you need to set the class
+// of its main view to IDPPresentationView
 @interface IDPPresentationView : UIView
 
 - (CGRect)frameForModalView:(UIView *)modalView
