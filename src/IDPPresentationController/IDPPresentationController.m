@@ -115,7 +115,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 		}
 	}
 	
-	if ([delegate respondsToSelector:kIDPWillReplaceSelector]) {
+	if ([delegate respondsToSelector:kIDPDidReplaceSelector]) {
 		[delegate presentationController:self
 	   didProceedToContentViewController:contentViewController
 					  fromViewController:oldContentViewController];

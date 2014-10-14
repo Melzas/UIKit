@@ -15,27 +15,27 @@
 @optional
 
 -		  (void)presentationController:(IDPPresentationController *)presentationController
-	willProceedToContentViewController:(UIViewController *)contentViewController
-					fromViewController:(UIViewController *)oldViewController;
+	willProceedToContentViewController:(id)contentViewController
+					fromViewController:(id)oldViewController;
 
 -		 (void)presentationController:(IDPPresentationController *)presentationController
-	didProceedToContentViewController:(UIViewController *)contentViewController
-				   fromViewController:(UIViewController *)newViewController;
+	didProceedToContentViewController:(id)contentViewController
+				   fromViewController:(id)newViewController;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	 willPresentViewController:(UIViewController *)viewController
+	 willPresentViewController:(id)viewController
 					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	  didPresentViewController:(UIViewController *)viewController
+	  didPresentViewController:(id)viewController
 					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	 willDismissViewController:(UIViewController *)viewController
+	 willDismissViewController:(id)viewController
 					  animated:(BOOL)animated;
 
 - (void)presentationController:(IDPPresentationController *)presentationController
-	  didDismissViewController:(UIViewController *)viewController
+	  didDismissViewController:(id)viewController
 					  animated:(BOOL)animated;
 
 @end
