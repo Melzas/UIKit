@@ -14,7 +14,7 @@
 #import "IDPViewControllerChildMacros.h"
 #import "IDPLoadingImageView.h"
 
-#import "IDPPresentationController.h"
-#import "IDPPresentingOptions.h"
-#import "IDPPresentationControllerDelegate.h"
-#import "IDPPresentationControllerDataSource.h"
+#import "IDPSlideController.h"
+#import "IDPSlideOptions.h"
+#import "IDPSlideControllerDelegate.h"
+#import "IDPSlideControllerDataSource.h"

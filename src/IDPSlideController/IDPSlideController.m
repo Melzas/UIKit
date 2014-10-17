@@ -1,42 +1,42 @@
 //
-//  IDPPresentationController.m
+//  IDPSlideController.m
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/13/14.
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
-#import "IDPPresentationController.h"
+#import "IDPSlideController.h"
 
 #import "NSObject+IDPExtensions.h"
 #import "UIViewController+IDPExtensions.h"
 #import "IDPPropertyMacros.h"
 
-#import "IDPPresentationControllerDelegate.h"
-#import "IDPPresentationControllerDataSource.h"
+#import "IDPSlideControllerDelegate.h"
+#import "IDPSlideControllerDataSource.h"
 
-#import "IDPPresentationView.h"
+#import "IDPSlideView.h"
 
-#define kIDPWillReplaceSelector @selector(presentationController: \
+#define kIDPWillReplaceSelector @selector(slideController: \
 							  willProceedToContentViewController: \
 											  fromViewController:)
-#define kIDPDidReplaceSelector	@selector(presentationController: \
+#define kIDPDidReplaceSelector	@selector(slideController: \
 							   didProceedToContentViewController: \
 											  fromViewController:)
 
-#define kIDPWillPresentSelector @selector(presentationController:willPresentViewController:animated:)
-#define kIDPDidPresentSelector	@selector(presentationController:didPresentViewController:animated:)
-#define kIDPWillDismissSelector @selector(presentationController:willDismissViewController:animated:)
-#define kIDPDidDismissSelector	@selector(presentationController:didDismissViewController:animated:)
+#define kIDPWillPresentSelector @selector(slideController:willPresentViewController:animated:)
+#define kIDPDidPresentSelector	@selector(slideController:didPresentViewController:animated:)
+#define kIDPWillDismissSelector @selector(slideController:willDismissViewController:animated:)
+#define kIDPDidDismissSelector	@selector(slideController:didDismissViewController:animated:)
 
-@implementation UIViewController (IDPPresentationController)
+@implementation UIViewController (IDPSlideController)
 
-- (IDPPresentationController *)presentationController {
+- (IDPSlideController *)slideController {
 	id controller = self;
 	
 	do {
 		controller = [controller parentViewController];
-		if ([controller isKindOfClass:[IDPPresentationController class]]) {
+		if ([controller isKindOfClass:[IDPSlideController class]]) {
 			return controller;
 		}
 	} while (nil != controller);
@@ -46,7 +46,7 @@
 
 @end
 
-@interface IDPPresentationController ()
+@interface IDPSlideController ()
 @property (nonatomic, retain)	NSMutableArray	*mutableModalViewControllers;
 
 - (void)addModalViewController:(UIViewController *)viewController;
@@ -55,9 +55,9 @@
 @end
 
 
-@implementation IDPPresentationController
+@implementation IDPSlideController
 
-@dynamic modalViewControllers;
+@dynamic slideViewControllers;
 
 #pragma mark -
 #pragma mark Initializations and Deallocations
@@ -82,7 +82,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationView);
+IDPViewControllerViewOfClassGetterSynthesize(IDPSlideView, slideView);
 
 - (void)setContentViewController:(UIViewController *)contentViewController {
 	UIViewController *oldContentViewController = _contentViewController;
@@ -94,9 +94,9 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	contentViewController.view.frame = self.view.frame;
 	
-	id<IDPPresentationControllerDelegate> delegate = self.delegate;
+	id<IDPSlideControllerDelegate> delegate = self.delegate;
 	if ([delegate respondsToSelector:kIDPWillReplaceSelector]) {
-		[delegate presentationController:self
+		[delegate slideController:self
 	  willProceedToContentViewController:contentViewController
 					  fromViewController:oldContentViewController];
 	}
@@ -116,13 +116,13 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	}
 	
 	if ([delegate respondsToSelector:kIDPDidReplaceSelector]) {
-		[delegate presentationController:self
+		[delegate slideController:self
 	   didProceedToContentViewController:contentViewController
 					  fromViewController:oldContentViewController];
 	}
 }
 
-- (void)setDataSource:(id<IDPPresentationControllerDataSource>)dataSource {
+- (void)setDataSource:(id<IDPSlideControllerDataSource>)dataSource {
 	self.view.userInteractionEnabled = YES;
 	
 	IDPNonatomicAssignPropertySynthesize(_dataSource, dataSource);
@@ -133,11 +133,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 		[self removeModalViewController:mutableModalViewControllers[0]];
 	}
 	
-	NSArray *modalViewControllers = [dataSource modalViewControllersForPresentationController:self];
-	NSUInteger modalViewControllerCount = [modalViewControllers count];
+	NSArray *slideViewControllers = [dataSource slideViewControllersForSlideController:self];
+	NSUInteger modalViewControllerCount = [slideViewControllers count];
 	self.mutableModalViewControllers = [NSMutableArray arrayWithCapacity:modalViewControllerCount];
 	
-	for (UIViewController *viewController in modalViewControllers) {
+	for (UIViewController *viewController in slideViewControllers) {
 		[self addModalViewController:viewController];
 	}
 }
@@ -166,16 +166,16 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 					 animated:(BOOL)animated
 				   completion:(void(^)())completionBLock
 {
-	id<IDPPresentationControllerDataSource> dataSource = self.dataSource;
+	id<IDPSlideControllerDataSource> dataSource = self.dataSource;
 	
-	IDPPresentingOptions options = [dataSource presentingOptionsForViewController:viewController];
+	IDPSlideOptions options = [dataSource slideOptionsForViewController:viewController];
 	if (!animated) {
 		options.animationDuration = 0;
 	}
 	
-	id<IDPPresentationControllerDelegate> delegate = self.delegate;
+	id<IDPSlideControllerDelegate> delegate = self.delegate;
 	if ([delegate respondsToSelector:kIDPWillPresentSelector]) {
-		[delegate presentationController:self
+		[delegate slideController:self
 			   willPresentViewController:viewController
 								animated:animated];
 	}
@@ -183,13 +183,13 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	UIView *view = self.view;
 	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
 	
-	[self.presentationView presentView:viewController.view
-					 presentingOptions:options
+	[self.slideView presentView:viewController.view
+					 slideOptions:options
 							completion:^{
 								view.userInteractionEnabled = YES;
 								
 								if ([delegate respondsToSelector:kIDPDidPresentSelector]) {
-									[delegate presentationController:self
+									[delegate slideController:self
 											didPresentViewController:viewController
 															animated:animated];
 								}
@@ -205,16 +205,16 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 					 animated:(BOOL)animated
 				   completion:(void(^)())completionBLock
 {
-	id<IDPPresentationControllerDataSource> dataSource = self.dataSource;
+	id<IDPSlideControllerDataSource> dataSource = self.dataSource;
 	
-	IDPPresentingOptions options = [dataSource presentingOptionsForViewController:viewController];
+	IDPSlideOptions options = [dataSource slideOptionsForViewController:viewController];
 	if (!animated) {
 		options.animationDuration = 0;
 	}
 	
-	id<IDPPresentationControllerDelegate> delegate = self.delegate;
+	id<IDPSlideControllerDelegate> delegate = self.delegate;
 	if ([delegate respondsToSelector:kIDPWillDismissSelector]) {
-		[delegate presentationController:self
+		[delegate slideController:self
 			   willDismissViewController:viewController
 								animated:animated];
 	}
@@ -222,13 +222,13 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	UIView *view = self.view;
 	view.userInteractionEnabled = self.userInteractionDuringTransitionEnabled;
 	
-	[self.presentationView dismissView:viewController.view
-					 presentingOptions:options
+	[self.slideView dismissView:viewController.view
+					 slideOptions:options
 							completion:^{
 								view.userInteractionEnabled = YES;
 								
 								if ([delegate respondsToSelector:kIDPDidDismissSelector]) {
-									[delegate presentationController:self
+									[delegate slideController:self
 											didDismissViewController:viewController
 															animated:animated];
 								}
@@ -248,11 +248,11 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 	
 	[mutableModalViewControllers addObject:viewController];
 	
-	id<IDPPresentationControllerDataSource> dataSource = self.dataSource;
-	IDPPresentingOptions options = [dataSource presentingOptionsForViewController:viewController];
+	id<IDPSlideControllerDataSource> dataSource = self.dataSource;
+	IDPSlideOptions options = [dataSource slideOptionsForViewController:viewController];
 	
-	CGRect frame = [self.presentationView frameForModalView:viewController.view
-										  presentingOptions:options];
+	CGRect frame = [self.slideView frameForModalView:viewController.view
+										  slideOptions:options];
 	viewController.view.frame = frame;
 	
 	IDPViewControllerAddChildViewControllerSynthesize(viewController);
@@ -272,7 +272,7 @@ IDPViewControllerViewOfClassGetterSynthesize(IDPPresentationView, presentationVi
 
 - (void)loadView {
 	if (nil == self.storyboard) {
-		UIView *view = [IDPPresentationView object];
+		UIView *view = [IDPSlideView object];
 		view.frame = [[UIScreen mainScreen] bounds];
 		
 		self.view = view;

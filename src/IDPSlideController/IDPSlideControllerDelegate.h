@@ -1,5 +1,5 @@
 //
-//  IDPPresentationControllerDelegate.h
+//  IDPSlideControllerDelegate.h
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/13/14.
@@ -8,33 +8,33 @@
 
 #import "IDPObject.h"
 
-@class IDPPresentationController;
+@class IDPSlideController;
 
-@protocol IDPPresentationControllerDelegate <IDPObject>
+@protocol IDPSlideControllerDelegate <IDPObject>
 
 @optional
 
--		  (void)presentationController:(IDPPresentationController *)presentationController
+-		  (void)slideController:(IDPSlideController *)slideController
 	willProceedToContentViewController:(id)contentViewController
 					fromViewController:(id)oldViewController;
 
--		 (void)presentationController:(IDPPresentationController *)presentationController
+-		 (void)slideController:(IDPSlideController *)slideController
 	didProceedToContentViewController:(id)contentViewController
 				   fromViewController:(id)newViewController;
 
-- (void)presentationController:(IDPPresentationController *)presentationController
+- (void)slideController:(IDPSlideController *)slideController
 	 willPresentViewController:(id)viewController
 					  animated:(BOOL)animated;
 
-- (void)presentationController:(IDPPresentationController *)presentationController
+- (void)slideController:(IDPSlideController *)slideController
 	  didPresentViewController:(id)viewController
 					  animated:(BOOL)animated;
 
-- (void)presentationController:(IDPPresentationController *)presentationController
+- (void)slideController:(IDPSlideController *)slideController
 	 willDismissViewController:(id)viewController
 					  animated:(BOOL)animated;
 
-- (void)presentationController:(IDPPresentationController *)presentationController
+- (void)slideController:(IDPSlideController *)slideController
 	  didDismissViewController:(id)viewController
 					  animated:(BOOL)animated;
 

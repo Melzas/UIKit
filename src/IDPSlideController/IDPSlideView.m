@@ -1,33 +1,33 @@
 //
-//  IDPPresentationView.m
+//  IDPSlideView.m
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/14/14.
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
-#import "IDPPresentationView.h"
+#import "IDPSlideView.h"
 
 #import "CGGeometry+IDPExtensions.h"
 
-#import "IDPPresentationControllerDataSource.h"
-#import "IDPPresentationControllerDelegate.h"
+#import "IDPSlideControllerDataSource.h"
+#import "IDPSlideControllerDelegate.h"
 
-@interface IDPPresentationView ()
+@interface IDPSlideView ()
 
 - (void)animatePresentingOfView:(UIView *)view
-			  presentingOptions:(IDPPresentingOptions)presentingOptions
+			  slideOptions:(IDPSlideOptions)slideOptions
 					 completion:(void (^)(void))competionBlock;
 
 @end
 
-@implementation IDPPresentationView
+@implementation IDPSlideView
 
 #pragma mark -
 #pragma mark Public
 
 - (CGRect)frameForModalView:(UIView *)modalView
-		  presentingOptions:(IDPPresentingOptions)presentingOptions
+		  slideOptions:(IDPSlideOptions)slideOptions
 {
 	CGRect frame = self.frame;
 	CGPoint viewOrigin = frame.origin;
@@ -37,16 +37,16 @@
 	CGPoint modalViewOrigin = modalViewFrame.origin;
 	CGSize modalViewSize = modalViewFrame.size;
 	
-	if (presentingOptions.stretchingMask & IDPStretchingHorizontal) {
+	if (slideOptions.stretchingMask & IDPStretchingHorizontal) {
 		modalViewSize = CGSizeMake(viewSize.width, modalViewSize.height);
 	}
-	if (presentingOptions.stretchingMask & IDPStretchingVertical) {
+	if (slideOptions.stretchingMask & IDPStretchingVertical) {
 		modalViewSize = CGSizeMake(modalViewSize.width, viewSize.height);
 	}
 	
-	CGFloat ledge = presentingOptions.ledge;
+	CGFloat ledge = slideOptions.ledge;
 	
-	switch (presentingOptions.direction) {
+	switch (slideOptions.direction) {
 		case IDPSlideDirectionUp:
 			modalViewOrigin = CGPointMake(modalViewOrigin.x, viewOrigin.y + viewSize.height - ledge);
 			break;
@@ -68,22 +68,22 @@
 }
 
 - (void)presentView:(UIView *)view
-  presentingOptions:(IDPPresentingOptions)presentingOptions
+  slideOptions:(IDPSlideOptions)slideOptions
 		 completion:(void (^)(void))competionBlock
 {
 	[self animatePresentingOfView:view
-				presentingOptions:presentingOptions
+				slideOptions:slideOptions
 					   completion:competionBlock];
 }
 
 - (void)dismissView:(UIView *)view
-  presentingOptions:(IDPPresentingOptions)presentingOptions
+  slideOptions:(IDPSlideOptions)slideOptions
 		 completion:(void (^)(void))competionBlock
 {
-	presentingOptions.distance = -presentingOptions.distance;
+	slideOptions.distance = -slideOptions.distance;
 	
 	[self animatePresentingOfView:view
-				presentingOptions:presentingOptions
+				slideOptions:slideOptions
 					   completion:competionBlock];
 }
 
@@ -91,16 +91,16 @@
 #pragma mark Private
 
 - (void)animatePresentingOfView:(UIView *)view
-			  presentingOptions:(IDPPresentingOptions)presentingOptions
+			  slideOptions:(IDPSlideOptions)slideOptions
 					 completion:(void (^)(void))competionBlock
 {
 	CGPoint center = view.center;
 	
-	[UIView animateWithDuration:presentingOptions.animationDuration
+	[UIView animateWithDuration:slideOptions.animationDuration
 					 animations:^{
-						 CGFloat distance = presentingOptions.distance;
+						 CGFloat distance = slideOptions.distance;
 						 
-						 switch (presentingOptions.direction) {
+						 switch (slideOptions.direction) {
 							 case IDPSlideDirectionUp:
 								 distance = -distance;
 								 // no break

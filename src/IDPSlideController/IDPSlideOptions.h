@@ -1,5 +1,5 @@
 //
-//  IDPPresentingOptions.h
+//  IDPSlideOptions.h
 //  IDPKit
 //
 //  Created by Anton Rayev on 5/14/14.
@@ -34,7 +34,7 @@ enum {
 };
 typedef NSUInteger IDPStretchingMask;
 
-struct __IDPPresentingOptions {
+struct __IDPSlideOptions {
 	// direction of sliding
 	IDPSlideDirection direction;
 	
@@ -51,4 +51,4 @@ struct __IDPPresentingOptions {
 	// the distance to slide
 	CGFloat distance;
 };
-typedef struct __IDPPresentingOptions IDPPresentingOptions;
+typedef struct __IDPSlideOptions IDPSlideOptions;
