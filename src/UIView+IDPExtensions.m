@@ -70,12 +70,6 @@
 		return NO;
 	}
 	
-	CGRect windowFrame = window.frame;
-	CGRect frame = [self convertRect:self.frame toView:window];
-	if (!CGRectIntersectsRect(frame, windowFrame)) {
-		return NO;
-	}
-	
 	return YES;
 }
 
