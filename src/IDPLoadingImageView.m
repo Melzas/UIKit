@@ -45,7 +45,14 @@
 		[self addSubview:self.imageView];
 	}
 	
-	IDPNonatomicRetainPropertySynthesizeWithObserver(_model, imageModel);
+	if (_model != imageModel) {
+		[_model removeObserver:self];
+		[_model release];
+		_model = [imageModel retain];
+		
+		// IDPLoadingImageView always a top-level observer
+		[_model insertObserver:self atIndex:0];
+	}
 	
 	if (IDPModelFinished == imageModel.state) {
 		[self fillFromModel:imageModel];
