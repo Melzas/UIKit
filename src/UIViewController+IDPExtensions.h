@@ -21,5 +21,6 @@
 @property (nonatomic, retain, readonly) UITableView *tableView;
 
 + (id)defaultNibController;
++ (id)defaultStoryboardController;
 
 @end

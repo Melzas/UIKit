@@ -21,4 +21,11 @@
     return nil;
 }
 
++ (id)defaultStoryboardController {
+	NSString *storyboardName = NSStringFromClass([self class]);
+	UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:nil];
+	
+	return [storyboard instantiateInitialViewController];
+}
+
 @end
