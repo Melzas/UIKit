@@ -6,8 +6,7 @@
 //  Copyright 2011 RedShiftLab. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 
 @interface UIColor (IDPExtensions)
 

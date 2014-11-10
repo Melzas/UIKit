@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 IDAP Group. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 /**
  *  This class will share the data encapsulates the logic. 

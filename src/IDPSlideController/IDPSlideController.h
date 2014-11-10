@@ -17,6 +17,8 @@
 // 8) Thats it. Now this UIViewController is content view controller of IDPSlideController.
 //    You can setup datasource for IDPSlideController as usual
 
+#import <UIKit/UIKit.h>
+
 #import "IDPViewControllerChildMacros.h"
 
 @protocol IDPSlideControllerDelegate;

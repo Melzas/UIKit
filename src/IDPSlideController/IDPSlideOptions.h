@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Anton Rayev. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+
 typedef enum {
 	// slide up from the bottom of the screen
 	IDPSlideDirectionUp,
