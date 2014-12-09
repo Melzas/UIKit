@@ -27,6 +27,7 @@
 - (void)dealloc {
 	self.spinner = nil;
 	self.imageView = nil;
+	self.placeholder = nil;
 	self.model = nil;
 	
 	[super dealloc];
@@ -41,8 +42,13 @@
 
 - (void)setModel:(IDPImageModel *)imageModel loadLater:(BOOL)loadLater {
 	IDPImageModel *previousModel = _model;
+	
 	if (IDPModelFailed == previousModel.state) {
-		[self addSubview:self.imageView];
+		if (nil != self.placeholder) {
+			self.imageView.image = nil;
+		} else {
+			[self addSubview:self.imageView];
+		}
 	}
 	
 	if (_model != imageModel) {
@@ -93,7 +99,12 @@
 
 - (void)modelDidFailToLoad:(id)theModel {
 	[self.spinner stopAnimating];
-	[self.imageView removeFromSuperview];
+	
+	if (nil != self.placeholder) {
+		self.imageView.image = self.placeholder;
+	} else {
+		[self.imageView removeFromSuperview];
+	}
 }
 
 - (void)modelDidUnload:(id)model {

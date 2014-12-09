@@ -12,9 +12,11 @@
 
 @class IDPImageModel;
 
+IB_DESIGNABLE
 @interface IDPLoadingImageView : UIView <IDPModelObserver>
 @property (nonatomic, retain)	IBOutlet UIActivityIndicatorView	*spinner;
 @property (nonatomic, retain)	IBOutlet UIImageView				*imageView;
+@property (nonatomic, retain)	IBInspectable UIImage				*placeholder;
 
 @property (nonatomic, retain)	IDPImageModel	*model;
 
