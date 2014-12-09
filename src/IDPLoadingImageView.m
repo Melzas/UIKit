@@ -60,7 +60,13 @@
 		[_model insertObserver:self atIndex:0];
 	}
 	
-	if (IDPModelFinished == imageModel.state) {
+	if (IDPModelFailed == imageModel.state) {
+		if (nil != self.placeholder) {
+			self.imageView.image = self.placeholder;
+		} else {
+			[self.imageView removeFromSuperview];
+		}
+	} else if (IDPModelFinished == imageModel.state) {
 		[self fillFromModel:imageModel];
 		[self.spinner stopAnimating];
 	} else {
