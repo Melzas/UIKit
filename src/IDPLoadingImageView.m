@@ -61,14 +61,18 @@
 	}
 	
 	if (IDPModelFailed == imageModel.state) {
+		[self.spinner stopAnimating];
+		
 		if (nil != self.placeholder) {
 			self.imageView.image = self.placeholder;
 		} else {
 			[self.imageView removeFromSuperview];
 		}
+		
 	} else if (IDPModelFinished == imageModel.state) {
 		[self fillFromModel:imageModel];
 		[self.spinner stopAnimating];
+		
 	} else {
 		if (kIDPImageSourceFileURLUpdate != imageModel.imageSource) {
 			self.imageView.image = nil;
