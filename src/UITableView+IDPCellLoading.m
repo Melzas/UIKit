@@ -24,4 +24,11 @@
     return cell;
 }
 
+- (id)cellForSubview:(UIView *)view {
+	CGPoint position = [view convertPoint:CGPointZero toView:self];
+	NSIndexPath *indexPath = [self indexPathForRowAtPoint:position];
+	
+	return [self cellForRowAtIndexPath:indexPath];
+}
+
 @end

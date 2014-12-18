@@ -11,7 +11,8 @@
 @interface UITableView (IDPCellLoading)
 
 - (id)dequeueCell:(Class)theClass;
-
 - (id)dequeueCell:(Class)theClass withOwner:(id)owner;
+
+- (id)cellForSubview:(UIView *)view;
 
 @end
